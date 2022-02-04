@@ -1,6 +1,6 @@
 # QR-Scanner
 
-[GitHub last commit](https://img.shields.io/github/last-commit/cynthiakonar/food-info-app/qr-scan-v1?style=plastic) ![GitHub issues](https://img.shields.io/github/issues/cynthiakonar/food-info-app/qr-scan-v1?style=plastic) 
+![GitHub last commit](https://img.shields.io/github/last-commit/cynthiakonar/food-info-app/qr-scan-v1?style=plastic) ![GitHub issues](https://img.shields.io/github/issues/cynthiakonar/food-info-app/qr-scan-v1?style=plastic) 
 
 ## App To Scan QR Code 
 
