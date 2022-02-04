@@ -26,7 +26,7 @@ https://user-images.githubusercontent.com/89989829/152540271-423c7ec6-ee53-4533-
 - url_launcher
 
 **Resources Used:** 
-- [YouTube](https://youtube.com) | 
+- [YouTube](https://youtube.com)
 - [Dart & Flutter Packages](https://pub.dev/)
 
 <br>
