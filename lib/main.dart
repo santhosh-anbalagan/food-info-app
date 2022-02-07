@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_scanner/screens/wrapper.dart';
 import 'screens/home/home.dart';
 import 'screens/home/history.dart';
 import 'screens/authenticate/login.dart';
@@ -7,7 +8,7 @@ import 'screens/authenticate/signup.dart';
 void main() => runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: Wrapper(),
         routes: {
           '/home': (context) => HomePage(),
           '/history': (context) => HistoryPage(),
