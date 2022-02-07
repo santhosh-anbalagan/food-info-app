@@ -1,11 +1,14 @@
-import 'dart:async';
+// buttons to scan/ logout/ view scan history/ report a problem
+
 import 'package:flutter/material.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
+import 'dart:async';
 
-import 'history.dart';
-import 'list.dart';
+import '../../list.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -31,17 +34,16 @@ class _HomePageState extends State<HomePage> {
           urls.add(qrResult.rawContent);
         },
       );
-    } on Exception catch (ex) {
-      setState(
-        () {
-          urls.add(ex as String);
-        },
-      );
+      Navigator.pushNamed(context, '/history');
+    } on FormatException catch (ex) {
+      setState(() {
+        urls.add('You Pressed the Back Button before Scanning');
+      });
+    } catch (ex) {
+      setState(() {
+        urls.add('Unknown Error $ex');
+      });
     }
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => HistoryPage()),
-    );
   }
 
   @override

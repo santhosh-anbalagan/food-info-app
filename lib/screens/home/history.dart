@@ -1,6 +1,8 @@
+// shows all time scan history, buttons view today's history/ all history /to go to home page/ scan again/ option to delete any url
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'list.dart';
+import '../../list.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
