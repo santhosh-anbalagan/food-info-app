@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               padding: const EdgeInsets.all(5.0),
               child: const Text(
-                'Welcome back!',
+                'Welcome Back!',
                 style: TextStyle(
                     fontFamily: 'Product Sans',
                     fontWeight: FontWeight.bold,
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 20.0),
+              padding: const EdgeInsets.fromLTRB(50.0, 10.0, 50.0, 20.0),
               child: const Text(
                 //Need to change this line
                 'Log in to your existent account of QR Scanner',
@@ -65,16 +65,34 @@ class _LoginPageState extends State<LoginPage> {
               padding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: RaisedButton(
-                  child: const Text('Guest Login'),
-                  onPressed: () async {
-                    dynamic result = await _auth.signInAnon();
-                    if (result == null) {
-                      print('Error signing in');
-                    } else {
-                      print('Signed In');
-                      print(result);
-                    }
-                  }),
+                child: const Text('Guest Login'),
+                onPressed: () async {
+                  dynamic result = await _auth.signInAnon();
+                  if (result == null) {
+                    print('Error signing in');
+                  } else {
+                    print('Signed In');
+                    print(result.uid);
+                  }
+                },
+              ),
+            ),
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              child: RaisedButton(
+                child: const Text('User Login'),
+                onPressed: () => Navigator.pushNamed(context, '/userlogin'),
+//                  async {
+//                    dynamic result = await _auth.signInAnon();
+//                    if (result == null) {
+//                      print('Error signing in');
+//                    } else {
+//                      print('Signed In');
+//                      print(result.uid);
+//                    }
+//                  }),
+              ),
             ),
           ],
         ),

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../list.dart';
+import '../../utilities/list.dart';
 
 class HistoryPage extends StatefulWidget {
   @override

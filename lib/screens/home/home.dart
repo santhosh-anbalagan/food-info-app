@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:qr_scanner/services/auth.dart';
 import 'dart:async';
 
-import '../../list.dart';
+import '../../utilities/list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final AuthService _auth = AuthService();
+
   Future<void> _scanQR() async {
     AppBar(
       backgroundColor: const Color(0xFFFF7D54),
@@ -50,12 +53,34 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        actions: [
+          TextButton.icon(
+            icon: const Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
+            label: const Text(
+              'Sign Out',
+              style: TextStyle(
+                  fontFamily: 'Product Sans',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15.0,
+                  color: Color(0xFF1E1E1E)),
+            ),
+            onPressed: () async {
+              await _auth.signOut();
+            },
+          )
+        ],
+      ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.fromLTRB(50.0, 20.0, 50.0, 40.0),
+              padding: const EdgeInsets.fromLTRB(50.0, 30.0, 50.0, 40.0),
               child: Image.asset(
                 'assets/logo.png',
                 height: 200,

@@ -1,54 +1,16 @@
-//signup screen
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_scanner/utilities/constants.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
-
+class login extends StatefulWidget {
   @override
-  _SignUpState createState() => _SignUpState();
+  _loginState createState() => _loginState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _loginState extends State<login> {
   bool _rememberMe = false;
-
-  Widget _buildUsernameTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Username',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 10.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
-          height: 60.0,
-          child: TextField(
-            keyboardType: TextInputType.name,
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.account_circle,
-                color: Colors.white,
-              ),
-              hintText: 'Enter new Username',
-              hintStyle: kHintTextStyle,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget _buildEmailTF() {
     return Column(
@@ -85,12 +47,12 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _buildNewPasswordTF() {
+  Widget _buildPasswordTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'New Password',
+          'Password',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -120,38 +82,17 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _buildReTypePasswordTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Re-type Password',
+  Widget _buildForgotPasswordBtn() {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: FlatButton(
+        onPressed: () => print('Forgot Password Button Pressed'),
+        padding: EdgeInsets.only(right: 0.0),
+        child: Text(
+          'Forgot Password?',
           style: kLabelStyle,
         ),
-        SizedBox(height: 10.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
-          height: 60.0,
-          child: TextField(
-            obscureText: true,
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.white,
-              ),
-              hintText: 'Re-enter your Password',
-              hintStyle: kHintTextStyle,
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -182,14 +123,14 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _buildSignUpBtn() {
+  Widget _buildLoginBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          print('SignUp Button Pressed');
+          print('Login Button Pressed');
           Navigator.of(context).pushNamed('/home');
         },
         padding: EdgeInsets.all(15.0),
@@ -198,7 +139,7 @@ class _SignUpState extends State<SignUp> {
         ),
         color: Colors.white,
         child: Text(
-          'SIGN UP',
+          'LOGIN',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
@@ -211,7 +152,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _buildSignUpWithText() {
+  Widget _buildSignInWithText() {
     return Column(
       children: <Widget>[
         Text(
@@ -223,7 +164,7 @@ class _SignUpState extends State<SignUp> {
         ),
         SizedBox(height: 20.0),
         Text(
-          'Sign up with',
+          'Sign in with',
           style: kLabelStyle,
         ),
       ],
@@ -267,13 +208,13 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
           _buildSocialBtn(
-            () => print('SignUp with Facebook'),
+            () => print('Login with Facebook'),
             AssetImage(
               'assets/logos/facebook.jpg',
             ),
           ),
           _buildSocialBtn(
-            () => print('SignUp with Google'),
+            () => print('Login with Google'),
             AssetImage(
               'assets/logos/google.jpg',
             ),
@@ -286,14 +227,14 @@ class _SignUpState extends State<SignUp> {
   Widget _buildSignupBtn() {
     return GestureDetector(
       onTap: () {
-        print('Sign In Button Pressed');
-        Navigator.of(context).pushNamed('/login');
+        print('Sign Up Button Pressed');
+        Navigator.of(context).pushNamed('/signup');
       },
       child: RichText(
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Already have an Account? ',
+              text: 'Don\'t have an Account? ',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -301,7 +242,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             TextSpan(
-              text: 'Sign In',
+              text: 'Sign Up',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -352,7 +293,7 @@ class _SignUpState extends State<SignUp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Sign Up',
+                        'Sign In',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'OpenSans',
@@ -362,16 +303,14 @@ class _SignUpState extends State<SignUp> {
                       ),
                       SizedBox(height: 30.0),
                       _buildEmailTF(),
-                      SizedBox(height: 30.0),
-                      _buildUsernameTF(),
-                      SizedBox(height: 30.0),
-                      _buildNewPasswordTF(),
-                      SizedBox(height: 30.0),
-                      _buildReTypePasswordTF(),
-                      SizedBox(height: 30.0),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      _buildPasswordTF(),
+                      _buildForgotPasswordBtn(),
                       _buildRememberMeCheckbox(),
-                      _buildSignUpBtn(),
-                      _buildSignUpWithText(),
+                      _buildLoginBtn(),
+                      _buildSignInWithText(),
                       _buildSocialBtnRow(),
                       _buildSignupBtn(),
                     ],
