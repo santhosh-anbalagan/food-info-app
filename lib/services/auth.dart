@@ -1,7 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:qr_scanner/models/user.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  //Create user object based on Firebase user
+  MyUser? _userFromFirebaseUser(User? user) {
+    return user != null ? MyUser(uid: user.uid) : null;
+  }
 
   // sign in anonymously
   Future signInAnon() async {
@@ -10,7 +16,7 @@ class AuthService {
       UserCredential result = await _auth.signInAnonymously();
       //FirebaseUser class name has changed to User
       User? user = result.user;
-      return user;
+      return _userFromFirebaseUser(user);
     } catch (ex) {
       print(ex.toString());
       return null;
