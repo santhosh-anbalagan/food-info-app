@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qr_scanner/utilities/constants.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -21,12 +20,26 @@ class _SignUpState extends State<SignUp> {
       children: <Widget>[
         Text(
           'Username',
-          style: kLabelStyle,
+          style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'ProductSans',
+          ),
         ),
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6.0,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
           height: 60.0,
           child: TextField(
             keyboardType: TextInputType.name,
@@ -42,7 +55,10 @@ class _SignUpState extends State<SignUp> {
                 color: Colors.white,
               ),
               hintText: 'Enter new Username',
-              hintStyle: kHintTextStyle,
+              hintStyle: TextStyle(
+                fontFamily: 'Product Sans',
+                color: Color(0xFFA0A0A0),
+              ),
             ),
           ),
         ),
@@ -56,12 +72,26 @@ class _SignUpState extends State<SignUp> {
       children: <Widget>[
         Text(
           'Email',
-          style: kLabelStyle,
+          style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'ProductSans',
+          ),
         ),
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6.0,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
           height: 60.0,
           child: TextField(
             keyboardType: TextInputType.emailAddress,
@@ -77,7 +107,10 @@ class _SignUpState extends State<SignUp> {
                 color: Colors.white,
               ),
               hintText: 'Enter your Email',
-              hintStyle: kHintTextStyle,
+              hintStyle: TextStyle(
+                fontFamily: 'Product Sans',
+                color: Color(0xFFA0A0A0),
+              ),
             ),
           ),
         ),
@@ -91,12 +124,26 @@ class _SignUpState extends State<SignUp> {
       children: <Widget>[
         Text(
           'New Password',
-          style: kLabelStyle,
+          style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'ProductSans',
+          ),
         ),
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6.0,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
           height: 60.0,
           child: TextField(
             obscureText: true,
@@ -112,7 +159,10 @@ class _SignUpState extends State<SignUp> {
                 color: Colors.white,
               ),
               hintText: 'Enter your Password',
-              hintStyle: kHintTextStyle,
+              hintStyle: TextStyle(
+                fontFamily: 'Product Sans',
+                color: Color(0xFFA0A0A0),
+              ),
             ),
           ),
         ),
@@ -126,12 +176,26 @@ class _SignUpState extends State<SignUp> {
       children: <Widget>[
         Text(
           'Re-type Password',
-          style: kLabelStyle,
+          style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'ProductSans',
+          ),
         ),
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6.0,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
           height: 60.0,
           child: TextField(
             obscureText: true,
@@ -147,7 +211,10 @@ class _SignUpState extends State<SignUp> {
                 color: Colors.white,
               ),
               hintText: 'Re-enter your Password',
-              hintStyle: kHintTextStyle,
+              hintStyle: TextStyle(
+                fontFamily: 'Product Sans',
+                color: Color(0xFFA0A0A0),
+              ),
             ),
           ),
         ),
@@ -175,7 +242,11 @@ class _SignUpState extends State<SignUp> {
           ),
           Text(
             'Remember me',
-            style: kLabelStyle,
+            style: TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'ProductSans',
+            ),
           ),
         ],
       ),
@@ -224,7 +295,11 @@ class _SignUpState extends State<SignUp> {
         SizedBox(height: 20.0),
         Text(
           'Sign up with',
-          style: kLabelStyle,
+          style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'ProductSans',
+          ),
         ),
       ],
     );

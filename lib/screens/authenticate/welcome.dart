@@ -34,7 +34,8 @@ class Welcome extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(50.0, 5.0, 50.0, 20.0),
               child: const Text(
                 //Need to change this line
-                'Please give access to your Camera so that\n we can scan and provide you what is\n inside the code',
+                'Create an account on QR Scanner to access all features',
+                //'Please give access to your Camera so that\n we can scan and provide you what is\n inside the code',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Product Sans',
