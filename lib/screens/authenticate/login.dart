@@ -14,6 +14,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final AuthService _auth = AuthService();
+  late String email;
+  late String password;
 
   Widget _buildEmailTF() {
     return Column(
@@ -41,13 +43,13 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
           height: 60.0,
-          child: const TextField(
+          child: TextFormField(
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontFamily: 'Product Sans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
@@ -60,6 +62,16 @@ class _LoginPageState extends State<LoginPage> {
                 color: Color(0xFFA0A0A0),
               ),
             ),
+            validator: (_val) {
+              if (_val!.isEmpty) {
+                return "Can't be empty";
+              } else {
+                return null;
+              }
+            },
+            onChanged: (val) {
+              email = val;
+            },
           ),
         ),
       ],
@@ -92,13 +104,13 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
           height: 60.0,
-          child: const TextField(
+          child: TextFormField(
             obscureText: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontFamily: 'Product Sans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
@@ -111,6 +123,16 @@ class _LoginPageState extends State<LoginPage> {
                 color: Color(0xFFA0A0A0),
               ),
             ),
+            validator: (_val) {
+              if (_val!.isEmpty) {
+                return "Can't be empty";
+              } else {
+                return null;
+              }
+            },
+            onChanged: (val) {
+              password = val;
+            },
           ),
         ),
       ],
@@ -141,10 +163,9 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 3.0,
-        onPressed: () {
-          print('Login Button Pressed');
-          Navigator.of(context).pushNamed('/home');
-        },
+        onPressed: () => _auth.emailLogin(email, password).whenComplete(
+              () => Navigator.of(context).pushNamed('/home'),
+            ),
         padding: const EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -181,7 +202,13 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       width: 260.0,
       child: ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: () => _auth.googleLogin().whenComplete(
+              () => 
+              // need to return uid to homepage somehow
+              User? user = = await Firebase.instance.currentUser;
+              
+              Navigator.of(context).pushNamed('/home'),
+            ),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),

@@ -8,14 +8,17 @@ import 'dart:async';
 import '../../utilities/list.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required this.uid}) : super(key: key);
+  final String uid;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState(uid);
 }
 
 class _HomePageState extends State<HomePage> {
   final AuthService _auth = AuthService();
+  final String uid;
+  _HomePageState(this.uid);
 
   Future<void> _scanQR() async {
     AppBar(
@@ -71,7 +74,9 @@ class _HomePageState extends State<HomePage> {
                   color: Color(0xFF1E1E1E)),
             ),
             onPressed: () async {
-              await _auth.signOut();
+              await _auth.signOut().whenComplete(
+                    () => Navigator.of(context).pushNamed('/home'),
+                  );
             },
           )
         ],
