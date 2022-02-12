@@ -1,11 +1,10 @@
 // buttons to scan/ logout/ view scan history/ report a problem
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:qr_scanner/services/auth.dart';
 import 'dart:async';
-
-import '../../utilities/list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.uid}) : super(key: key);
@@ -19,6 +18,8 @@ class _HomePageState extends State<HomePage> {
   final AuthService _auth = AuthService();
   final String uid;
   _HomePageState(this.uid);
+  CollectionReference urlcollections =
+      FirebaseFirestore.instance.collection('urls');
 
   Future<void> _scanQR() async {
     AppBar(
@@ -37,18 +38,19 @@ class _HomePageState extends State<HomePage> {
       var qrResult = await BarcodeScanner.scan();
       setState(
         () {
-          urls.add(qrResult.rawContent);
+          urlcollections.doc(uid).collection('urls').add(
+            {
+              'url': qrResult.rawContent,
+              'time': DateTime.now(),
+            },
+          );
         },
       );
       Navigator.pushNamed(context, '/history');
     } on FormatException catch (ex) {
-      setState(() {
-        urls.add('You Pressed the Back Button before Scanning');
-      });
+      print('Pressed the Back Button before Scanning');
     } catch (ex) {
-      setState(() {
-        urls.add('Unknown Error $ex');
-      });
+      print('Unknown Error $ex');
     }
   }
 
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () async {
               await _auth.signOut().whenComplete(
-                    () => Navigator.of(context).pushNamed('/home'),
+                    () => Navigator.of(context).pushNamed('/login'),
                   );
             },
           )

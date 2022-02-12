@@ -1,8 +1,10 @@
 // login screen
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qr_scanner/screens/home/home.dart';
 import 'package:qr_scanner/services/auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -163,9 +165,15 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 3.0,
-        onPressed: () => _auth.emailLogin(email, password).whenComplete(
-              () => Navigator.of(context).pushNamed('/home'),
-            ),
+        onPressed: () => _auth.emailLogin(email.trim(), password).whenComplete(
+          () {
+            final User? user = FirebaseAuth.instance.currentUser;
+
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => HomePage(uid: user!.uid)),
+            );
+          },
+        ),
         padding: const EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -203,12 +211,14 @@ class _LoginPageState extends State<LoginPage> {
       width: 260.0,
       child: ElevatedButton.icon(
         onPressed: () => _auth.googleLogin().whenComplete(
-              () => 
-              // need to return uid to homepage somehow
-              User? user = = await Firebase.instance.currentUser;
-              
-              Navigator.of(context).pushNamed('/home'),
-            ),
+          () {
+            final User? user = FirebaseAuth.instance.currentUser;
+
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => HomePage(uid: user!.uid)),
+            );
+          },
+        ),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),

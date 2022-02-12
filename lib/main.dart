@@ -4,8 +4,6 @@ import 'package:qr_scanner/screens/authenticate/signup.dart';
 import 'package:qr_scanner/screens/wrapper.dart';
 import 'package:qr_scanner/services/auth.dart';
 import 'models/user.dart';
-import 'screens/home/home.dart';
-import 'screens/home/history.dart';
 import 'screens/authenticate/login.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +18,6 @@ Future main() async {
         debugShowCheckedModeBanner: false,
         home: const Wrapper(),
         routes: {
-          '/home': (context) => HomePage(),
-          '/history': (context) => HistoryPage(),
           '/signup': (context) => SignUp(),
           '/login': (context) => LoginPage(),
         },

@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qr_scanner/services/auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -12,7 +13,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  bool _rememberMe = false;
+  final AuthService _auth = AuthService();
+  late String email;
+  late String password;
 
   Widget _buildUsernameTF() {
     return Column(
@@ -222,37 +225,6 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _buildRememberMeCheckbox() {
-    return Container(
-      height: 20.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: _rememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value!;
-                });
-              },
-            ),
-          ),
-          Text(
-            'Remember me',
-            style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'ProductSans',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildSignUpBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -359,31 +331,36 @@ class _SignUpState extends State<SignUp> {
   }
 
   Widget _buildSignupBtn() {
-    return GestureDetector(
-      onTap: () {
-        print('Sign In Button Pressed');
-        Navigator.of(context).pushNamed('/login');
-      },
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Already have an Account? ',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w400,
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: GestureDetector(
+        onTap: () {
+          print('Sign In Button Pressed');
+          Navigator.of(context).pushNamed('/login');
+        },
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Already have an Account? ',
+                style: TextStyle(
+                  fontFamily: 'Product Sans',
+                  color: Colors.grey,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'Sign In',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
+              TextSpan(
+                text: 'Sign In',
+                style: TextStyle(
+                  fontFamily: 'Product Sans',
+                  color: Colors.black,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -392,6 +369,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -400,59 +378,52 @@ class _SignUpState extends State<SignUp> {
             children: <Widget>[
               Container(
                 height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF9575CD),
-                      Color(0xFF7E57C2),
-                      Color(0xFF673AB7),
-                      Color(0xFF5E35B1),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
-                  ),
-                ),
-              ),
-              Container(
-                height: double.infinity,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 120.0,
+                    vertical: 30.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        padding: const EdgeInsets.all(30.0),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Product Sans',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30.0,
+                              ),
+                            ),
+                            SizedBox(height: 30.0),
+                            _buildEmailTF(),
+                            SizedBox(height: 30.0),
+                            _buildUsernameTF(),
+                            SizedBox(height: 30.0),
+                            _buildNewPasswordTF(),
+                            SizedBox(height: 30.0),
+                            _buildReTypePasswordTF(),
+                            SizedBox(height: 30.0),
+                            _buildSignUpBtn(),
+                            _buildSignUpWithText(),
+                            _buildSocialBtnRow(),
+                            _buildSignupBtn(),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 30.0),
-                      _buildEmailTF(),
-                      SizedBox(height: 30.0),
-                      _buildUsernameTF(),
-                      SizedBox(height: 30.0),
-                      _buildNewPasswordTF(),
-                      SizedBox(height: 30.0),
-                      _buildReTypePasswordTF(),
-                      SizedBox(height: 30.0),
-                      _buildRememberMeCheckbox(),
-                      _buildSignUpBtn(),
-                      _buildSignUpWithText(),
-                      _buildSocialBtnRow(),
-                      _buildSignupBtn(),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

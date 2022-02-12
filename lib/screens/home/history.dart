@@ -1,15 +1,24 @@
 // shows all time scan history, buttons view today's history/ all history /to go to home page/ scan again/ option to delete any url
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../utilities/list.dart';
 
 class HistoryPage extends StatefulWidget {
+  const HistoryPage({Key? key, required this.uid}) : super(key: key);
+  final String uid;
+
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
+  State<HistoryPage> createState() => _HistoryPageState(uid);
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  final String uid;
+  CollectionReference urlcollections =
+      FirebaseFirestore.instance.collection('urls');
+
+  _HistoryPageState(this.uid);
+
   _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(
@@ -99,58 +108,89 @@ class _HistoryPageState extends State<HistoryPage> {
               ],
             ),
             Expanded(
-              child: ListView.builder(
-                  itemCount: urls.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                      child: SizedBox(
-                        height: 80,
-                        child: ListTile(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                          ),
-                          tileColor: Colors.grey[100],
-                          title: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Expanded(
-                                child: Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () => _launchURL(urls[index]),
-                                      icon: const Icon(
-                                        Icons.link,
-                                        size: 40.0,
-                                        color: Color(0xFFFF7D54),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Text(
-                                          urls[index],
-                                          style: const TextStyle(
-                                            fontFamily: 'Product Sans',
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: urlcollections
+                    .doc(uid)
+                    .collection('url')
+                    .orderBy('time')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        DocumentSnapshot ds = snapshot.data!.docs[index];
+                        return Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                          child: SizedBox(
+                            height: 80,
+                            child: ListTile(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0)),
+                              ),
+                              tileColor: Colors.grey[100],
+                              title: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Expanded(
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () =>
+                                              _launchURL(ds[index]),
+                                          icon: const Icon(
+                                            Icons.link,
+                                            size: 40.0,
+                                            color: Color(0xFFFF7D54),
                                           ),
                                         ),
-                                      ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Text(
+                                              ds[index],
+                                              style: const TextStyle(
+                                                fontFamily: 'Product Sans',
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            urlcollections
+                                                .doc(uid)
+                                                .collection('urls')
+                                                .doc(ds.id)
+                                                .delete();
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete_forever_outlined,
+                                            size: 25.0,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     );
-                  }),
-            ),
+                  } else if (snapshot.hasError) {
+                    return CircularProgressIndicator();
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
+              ),
+            )
           ],
         ),
       ),
