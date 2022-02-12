@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
           child: TextFormField(
             keyboardType: TextInputType.emailAddress,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'Product Sans',
             ),
             decoration: const InputDecoration(
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
           child: TextFormField(
             obscureText: true,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'Product Sans',
             ),
             decoration: const InputDecoration(
@@ -141,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+// edit this widget
   Widget _buildForgotPasswordBtn() {
     return Container(
       alignment: Alignment.centerRight,
@@ -194,42 +195,114 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildSignInWithText() {
-    return const Padding(
-      padding: EdgeInsets.all(20.0),
-      child: Text(
-        '- OR -',
-        style: TextStyle(
-          color: Colors.grey,
-          fontWeight: FontWeight.w400,
+    return Column(
+      children: const <Widget>[
+        Text(
+          '- OR -',
+          style: TextStyle(
+            color: Colors.grey,
+            fontFamily: 'Product Sans',
+            fontWeight: FontWeight.w400,
+          ),
         ),
-      ),
+        SizedBox(height: 20.0),
+        Text(
+          'Sign In with',
+          style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Product Sans',
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildSocialBtnRow() {
-    return Container(
-      width: 260.0,
-      child: ElevatedButton.icon(
-        onPressed: () => _auth.googleLogin().whenComplete(
-          () {
-            final User? user = FirebaseAuth.instance.currentUser;
-
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePage(uid: user!.uid)),
-            );
-          },
-        ),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              height: 60.0,
+              width: 60.0,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, 2),
+                    blurRadius: 6.0,
+                  ),
+                ],
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/twitter.png',
+                  ),
+                ),
+              ),
+            ),
           ),
-          padding: EdgeInsets.all(10.0),
-          primary: Colors.grey[600],
-        ),
-        icon: const FaIcon(
-          FontAwesomeIcons.google,
-        ),
-        label: Text('Sign In with Google'),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              height: 60.0,
+              width: 60.0,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, 2),
+                    blurRadius: 6.0,
+                  ),
+                ],
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/facebook.jpg',
+                  ),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => _auth.googleLogin().whenComplete(
+              () {
+                final User? user = FirebaseAuth.instance.currentUser;
+
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(uid: user!.uid)),
+                );
+              },
+            ),
+            child: Container(
+              height: 60.0,
+              width: 60.0,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, 2),
+                    blurRadius: 6.0,
+                  ),
+                ],
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/google.jpg',
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -340,6 +413,7 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 20.0),
                       _buildSignInWithText(),
                       _buildSocialBtnRow(),
                       _buildSignupBtn(),
