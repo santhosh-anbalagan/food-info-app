@@ -1,4 +1,9 @@
+import 'dart:js';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:qr_scanner/models/user.dart';
 
@@ -6,6 +11,8 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 final googleSignIn = GoogleSignIn();
 
 class AuthService {
+  var loading = false;
+
   //Create user object based on Firebase user
   MyUser? _userFromFirebaseUser(User? user) {
     return user != null ? MyUser(uid: user.uid) : null;
@@ -109,6 +116,61 @@ class AuthService {
     UserCredential result = await _auth.signInWithCredential(credential);
     User? user = result.user;
     return _userFromFirebaseUser(user);
+  }
+
+  // Facebook Sign in
+  Future logInWithFacebook(context) async {
+    loading = true;
+    try {
+      final facebookLoginResult = await FacebookAuth.instance.login();
+      final userData = await FacebookAuth.instance.getUserData();
+
+      final facebookAuthCredential = FacebookAuthProvider.credential(
+          facebookLoginResult.accessToken!.token);
+      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+
+      await FirebaseFirestore.instance.collection('users').add({
+        'email': userData['email'],
+        'imageUrl': userData['picture']['data']['url'],
+        'name': userData['name'],
+      });
+      //return _userFromFirebaseUser(userData);
+    } on FirebaseAuthException catch (ex) {
+      var title = '';
+      switch (ex.code) {
+        case 'account-exists-with-different-credential':
+          title = 'This account exists with a different sign in provider';
+          break;
+        case 'invalid-credential':
+          title = 'Unknown error has occured';
+          break;
+        case 'operation-not-allowed':
+          title = 'This operation is not allowed';
+          break;
+        case 'user-disabled':
+          title = 'The user you tried to log into is disabled';
+          break;
+        case 'user-not-found':
+          title = 'The user you tried to log into was not found';
+          break;
+      }
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Log in with facebook failed'),
+          content: Text(title),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Ok')),
+          ],
+        ),
+      );
+    } finally {
+      loading = false;
+    }
   }
 
   //signout

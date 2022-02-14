@@ -3,7 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_scanner/screens/home/home.dart';
 import 'package:qr_scanner/services/auth.dart';
 
@@ -30,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Color(0xFFA0A0A0),
           ),
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
@@ -248,7 +247,16 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () => _auth.logInWithFacebook(context).whenComplete(
+              () {
+                final User? user = FirebaseAuth.instance.currentUser;
+
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(uid: user!.uid)),
+                );
+              },
+            ),
             child: Container(
               height: 60.0,
               width: 60.0,
@@ -296,7 +304,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
                 image: DecorationImage(
                   image: AssetImage(
-                    'assets/google.jpg',
+                    'assets/google.png',
                   ),
                 ),
               ),

@@ -1,5 +1,4 @@
 //signup screen
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,7 @@ class _SignUpState extends State<SignUp> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Username',
           style: TextStyle(
             color: Colors.grey,
@@ -31,13 +30,13 @@ class _SignUpState extends State<SignUp> {
             fontFamily: 'Product Sans',
           ),
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 6.0,
@@ -48,11 +47,11 @@ class _SignUpState extends State<SignUp> {
           height: 60.0,
           child: TextFormField(
             keyboardType: TextInputType.name,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'Product Sans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
@@ -75,7 +74,7 @@ class _SignUpState extends State<SignUp> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Email',
           style: TextStyle(
             color: Colors.grey,
@@ -83,13 +82,13 @@ class _SignUpState extends State<SignUp> {
             fontFamily: 'Product Sans',
           ),
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 6.0,
@@ -100,11 +99,11 @@ class _SignUpState extends State<SignUp> {
           height: 60.0,
           child: TextFormField(
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'Product Sans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
@@ -137,7 +136,7 @@ class _SignUpState extends State<SignUp> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'New Password',
           style: TextStyle(
             color: Colors.grey,
@@ -145,13 +144,13 @@ class _SignUpState extends State<SignUp> {
             fontFamily: 'Product Sans',
           ),
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 6.0,
@@ -162,11 +161,11 @@ class _SignUpState extends State<SignUp> {
           height: 60.0,
           child: TextFormField(
             obscureText: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'Product Sans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
@@ -197,7 +196,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget _buildSignUpBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 3.0,
@@ -210,7 +209,7 @@ class _SignUpState extends State<SignUp> {
             );
           },
         ),
-        padding: EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -229,84 +228,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _buildSignUpWithText() {
-    return Column(
-      children: <Widget>[
-        Text(
-          '- OR -',
-          style: TextStyle(
-            color: Colors.grey,
-            fontFamily: 'Product Sans',
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Text(
-          'Sign up with',
-          style: TextStyle(
-            color: Colors.grey,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Product Sans',
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSocialBtn(Function onTap, AssetImage logo) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
-            ),
-          ],
-          image: DecorationImage(
-            image: logo,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSocialBtnRow() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _buildSocialBtn(
-            () => print('Login with Twitter'),
-            AssetImage(
-              'assets/twitter.png',
-            ),
-          ),
-          _buildSocialBtn(
-            () => print('SignUp with Facebook'),
-            AssetImage(
-              'assets/facebook.jpg',
-            ),
-          ),
-          _buildSocialBtn(
-            () => print('SignUp with Google'),
-            AssetImage(
-              'assets/google.jpg',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSignupBtn() {
+  Widget _buildSignInBtn() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: GestureDetector(
@@ -315,7 +237,7 @@ class _SignUpState extends State<SignUp> {
           Navigator.of(context).pushNamed('/login');
         },
         child: RichText(
-          text: TextSpan(
+          text: const TextSpan(
             children: [
               TextSpan(
                 text: 'Already have an Account? ',
@@ -355,7 +277,7 @@ class _SignUpState extends State<SignUp> {
               Container(
                 height: double.infinity,
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.fromLTRB(40.0, 70.0, 40.0, 30.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -377,21 +299,19 @@ class _SignUpState extends State<SignUp> {
                                 fontSize: 30.0,
                               ),
                             ),
-                            SizedBox(height: 30.0),
+                            const SizedBox(height: 30.0),
                             _buildEmailTF(),
-                            SizedBox(height: 30.0),
+                            const SizedBox(height: 30.0),
                             _buildUsernameTF(),
-                            SizedBox(height: 30.0),
+                            const SizedBox(height: 30.0),
                             _buildNewPasswordTF(),
-                            SizedBox(height: 30.0),
+                            const SizedBox(height: 30.0),
                             _buildSignUpBtn(),
                           ],
                         ),
                       ),
-                      SizedBox(height: 20.0),
-                      _buildSignUpWithText(),
-                      _buildSocialBtnRow(),
-                      _buildSignupBtn(),
+                      const SizedBox(height: 20.0),
+                      _buildSignInBtn(),
                     ],
                   ),
                 ),
