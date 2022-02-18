@@ -3,6 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:async';
+// import 'dart:convert';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key, required this.uid}) : super(key: key);
@@ -31,6 +34,15 @@ class _HistoryPageState extends State<HistoryPage> {
       throw 'Could not launch $url';
     }
   }
+
+  // Future<List> getData(String url) async {
+  //   var response = await http.get(
+  //     Uri.parse(url),
+  //     headers: {"Accept": "application/json"},
+  //   );
+  //   List data = json.decode(response.body);
+  //   return data;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -138,8 +150,17 @@ class _HistoryPageState extends State<HistoryPage> {
                                     child: Row(
                                       children: [
                                         IconButton(
-                                          onPressed: () =>
-                                              _launchURL(ds[index]),
+                                          onPressed: () {
+                                            // if (ds[index]
+                                            //     .toString()
+                                            //     .startsWith("/characters")) {
+                                            //   Future<List> data = getData(
+                                            //       ("https://dark-api.herokuapp.com/api/v1" +
+                                            //           ds[index].toString()));
+                                            // } else {
+                                            _launchURL(ds[index]);
+                                            //}
+                                          },
                                           icon: const Icon(
                                             Icons.link,
                                             size: 40.0,

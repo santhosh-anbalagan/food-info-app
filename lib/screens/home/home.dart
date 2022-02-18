@@ -1,8 +1,9 @@
-// buttons to scan/ logout/ view scan history/ report a problem
+// buttons to scan/ logout/ view scan history
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:qr_scanner/screens/home/history.dart';
 import 'package:qr_scanner/services/auth.dart';
 import 'dart:async';
 
@@ -46,7 +47,8 @@ class _HomePageState extends State<HomePage> {
           );
         },
       );
-      Navigator.pushNamed(context, '/history');
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => HistoryPage(uid: uid)));
     } on FormatException catch (ex) {
       print('Pressed the Back Button before Scanning');
     } catch (ex) {

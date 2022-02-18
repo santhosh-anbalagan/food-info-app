@@ -1,4 +1,4 @@
-import 'dart:js';
+// import 'dart:js';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,8 +11,6 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 final googleSignIn = GoogleSignIn();
 
 class AuthService {
-  var loading = false;
-
   //Create user object based on Firebase user
   MyUser? _userFromFirebaseUser(User? user) {
     return user != null ? MyUser(uid: user.uid) : null;
@@ -120,7 +118,6 @@ class AuthService {
 
   // Facebook Sign in
   Future logInWithFacebook(context) async {
-    loading = true;
     try {
       final facebookLoginResult = await FacebookAuth.instance.login();
       final userData = await FacebookAuth.instance.getUserData();
@@ -129,12 +126,16 @@ class AuthService {
           facebookLoginResult.accessToken!.token);
       await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
-      await FirebaseFirestore.instance.collection('users').add({
-        'email': userData['email'],
-        'imageUrl': userData['picture']['data']['url'],
-        'name': userData['name'],
-      });
-      //return _userFromFirebaseUser(userData);
+      //Storing user info in firestore
+      await FirebaseFirestore.instance.collection('users').add(
+        {
+          'email': userData['email'],
+          'imageUrl': userData['picture']['data']['url'],
+          'name': userData['name'],
+        },
+      );
+      User? user = await _auth.currentUser;
+      return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (ex) {
       var title = '';
       switch (ex.code) {
@@ -168,8 +169,6 @@ class AuthService {
           ],
         ),
       );
-    } finally {
-      loading = false;
     }
   }
 
