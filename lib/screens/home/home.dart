@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       var qrResult = await BarcodeScanner.scan();
       setState(
         () {
-          urlcollections.doc(uid).collection('urls').add(
+          urlcollections.doc(uid).collection('url').add(
             {
               'url': qrResult.rawContent,
               'time': DateTime.now(),

@@ -3,9 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:async';
-// import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key, required this.uid}) : super(key: key);
@@ -35,14 +35,96 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
-  // Future<List> getData(String url) async {
-  //   var response = await http.get(
-  //     Uri.parse(url),
-  //     headers: {"Accept": "application/json"},
-  //   );
-  //   List data = json.decode(response.body);
-  //   return data;
-  // }
+  Future<void> getData(String url) async {
+    var response = await http.get(
+      Uri.parse(url),
+      headers: {"Accept": "application/json"},
+    );
+    Map data = json
+        .decode(response.body); // Use List instead of Map for all characters
+
+    print(data);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15),
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: 500,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.network(
+                    data['img'],
+                    width: 200,
+                    height: 150,
+                  ),
+                  //const SizedBox(height: 10),
+                  Text(
+                    data['name'],
+                    //style: TextStyle(),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Born: " + data['born'],
+                    //style: TextStyle(),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                    width: 20,
+                  ),
+                  Text(
+                    "Occupation: " + data['occupation'].toString(),
+                    //style: TextStyle(),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Status: " + data['status'],
+                    //style: TextStyle(),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Aliases: " + data['aliases'].toString(),
+                    //style: TextStyle(),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Appearance: Seasons " + data['appearance'].toString(),
+                    //style: TextStyle(),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Actor(s): " + data['portrayed'].toString(),
+                    //style: TextStyle(),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "First Appearance: " + data['first_appearance'].toString(),
+                    //style: TextStyle(),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Residence: " + data['residence'].toString(),
+                    //style: TextStyle(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +212,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   if (snapshot.hasData) {
                     return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (BuildContext context, int index) {
+                      itemBuilder: (context, index) {
                         DocumentSnapshot ds = snapshot.data!.docs[index];
                         return Padding(
                           padding:
@@ -151,15 +233,15 @@ class _HistoryPageState extends State<HistoryPage> {
                                       children: [
                                         IconButton(
                                           onPressed: () {
-                                            // if (ds[index]
-                                            //     .toString()
-                                            //     .startsWith("/characters")) {
-                                            //   Future<List> data = getData(
-                                            //       ("https://dark-api.herokuapp.com/api/v1" +
-                                            //           ds[index].toString()));
-                                            // } else {
-                                            _launchURL(ds[index]);
-                                            //}
+                                            if (ds['url']
+                                                .toString()
+                                                .startsWith("/character")) {
+                                              getData(
+                                                  ("https://dark-api.herokuapp.com/api/v1" +
+                                                      ds['url'].toString()));
+                                            } else {
+                                              _launchURL(ds['url']);
+                                            }
                                           },
                                           icon: const Icon(
                                             Icons.link,
@@ -171,7 +253,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
                                             child: Text(
-                                              ds[index],
+                                              ds['url'],
                                               style: const TextStyle(
                                                 fontFamily: 'Product Sans',
                                                 fontSize: 15,
@@ -185,7 +267,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                           onPressed: () {
                                             urlcollections
                                                 .doc(uid)
-                                                .collection('urls')
+                                                .collection('url')
                                                 .doc(ds.id)
                                                 .delete();
                                           },
@@ -205,9 +287,9 @@ class _HistoryPageState extends State<HistoryPage> {
                       },
                     );
                   } else if (snapshot.hasError) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                 },
               ),
