@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qr_scanner/screens/authenticate/login.dart';
 import 'package:qr_scanner/screens/home/home.dart';
 import 'package:qr_scanner/services/auth.dart';
 
@@ -232,10 +233,9 @@ class _SignUpState extends State<SignUp> {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: GestureDetector(
-        onTap: () {
-          print('Sign In Button Pressed');
-          Navigator.of(context).pushNamed('/login');
-        },
+        onTap: () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        ),
         child: RichText(
           text: const TextSpan(
             children: [

@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:qr_scanner/screens/authenticate/login.dart';
 import 'package:qr_scanner/screens/home/history.dart';
 import 'package:qr_scanner/services/auth.dart';
 import 'dart:async';
@@ -79,7 +80,10 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () async {
               await _auth.signOut().whenComplete(
-                    () => Navigator.of(context).pushNamed('/login'),
+                    () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    ),
                   );
             },
           )

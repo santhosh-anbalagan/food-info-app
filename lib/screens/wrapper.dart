@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:qr_scanner/screens/home/home.dart';
 
 import '../models/user.dart';
-import 'authenticate/authenticate.dart';
+import 'authenticate/login.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class Wrapper extends StatelessWidget {
     final user = Provider.of<MyUser?>(context);
     //return either home or authenticate widget
     if (user == null) {
-      return const Authenticate();
+      return const LoginPage();
     } else {
       return HomePage(uid: user.uid);
     }
