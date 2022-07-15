@@ -1,1 +1,3 @@
-# All updated apps worked on during internship at Lattice by Cynthia Konar
+# Updated Apps
+
+All work done during internship at Lattice by Cynthia
